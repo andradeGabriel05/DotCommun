@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "aKHm5YyP+bkaFrhoyQ53uwO+nNCyFeZ/0R+wxe0RQ1M=",
+  "Source": "dotnet.Presentation",
+  "BasePath": "_content/dotnet.Presentation",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

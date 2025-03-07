@@ -1,0 +1,9 @@
+<div class="" *ngFor="let message of messages">
+    <div>{{message}}</div>
+</div>
+
+<form (ngSubmit)="sendMessage(emailTo, message)" #chatForm="ngForm">
+    <input type="text" [(ngModel)]="message" name="message" placeholder="Message">
+    <input type="text" [(ngModel)]="emailTo" name="email" placeholder="email">
+    <button type="submit">-></button>
+</form>

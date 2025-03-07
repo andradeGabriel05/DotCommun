@@ -1,0 +1,12 @@
+D:\Downloads\reactApp\dotnet\DotCommun\dotnet\dotnet.Domain\bin\Debug\net8.0\dotnet.Domain.deps.json
+D:\Downloads\reactApp\dotnet\DotCommun\dotnet\dotnet.Domain\bin\Debug\net8.0\dotnet.Domain.dll
+D:\Downloads\reactApp\dotnet\DotCommun\dotnet\dotnet.Domain\bin\Debug\net8.0\dotnet.Domain.pdb
+D:\Downloads\reactApp\dotnet\DotCommun\dotnet\dotnet.Domain\obj\Debug\net8.0\dotnet.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\Downloads\reactApp\dotnet\DotCommun\dotnet\dotnet.Domain\obj\Debug\net8.0\dotnet.Domain.AssemblyInfoInputs.cache
+D:\Downloads\reactApp\dotnet\DotCommun\dotnet\dotnet.Domain\obj\Debug\net8.0\dotnet.Domain.AssemblyInfo.cs
+D:\Downloads\reactApp\dotnet\DotCommun\dotnet\dotnet.Domain\obj\Debug\net8.0\dotnet.Domain.csproj.CoreCompileInputs.cache
+D:\Downloads\reactApp\dotnet\DotCommun\dotnet\dotnet.Domain\obj\Debug\net8.0\dotnet.Domain.sourcelink.json
+D:\Downloads\reactApp\dotnet\DotCommun\dotnet\dotnet.Domain\obj\Debug\net8.0\dotnet.Domain.dll
+D:\Downloads\reactApp\dotnet\DotCommun\dotnet\dotnet.Domain\obj\Debug\net8.0\refint\dotnet.Domain.dll
+D:\Downloads\reactApp\dotnet\DotCommun\dotnet\dotnet.Domain\obj\Debug\net8.0\dotnet.Domain.pdb
+D:\Downloads\reactApp\dotnet\DotCommun\dotnet\dotnet.Domain\obj\Debug\net8.0\ref\dotnet.Domain.dll
