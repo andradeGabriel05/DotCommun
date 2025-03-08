@@ -1,19 +1,21 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { baseUrl } from '../../../global';
+import { jwtDecode } from 'jwt-decode';
+import { AsideComponent } from '../../components/aside/aside.component';
 
 @Component({
   standalone: true,
   selector: 'app-chat',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, AsideComponent],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss'
 })
 export class ChatComponent {
-  public emailTo: string = '';
+  public emailTo: string = localStorage.getItem('emailTo') ?? '';
+  public emailFrom: string = '';
 
   public message: string = '';
   public messages: string[] = [];
@@ -22,7 +24,7 @@ export class ChatComponent {
 
   constructor() {
     this.connection = new HubConnectionBuilder()
-    .withUrl(baseUrl+'chatHub', {
+    .withUrl(baseUrl + 'chatHub', {
       accessTokenFactory: () => localStorage.getItem('token') ?? ''
     })
     .withAutomaticReconnect()
@@ -30,14 +32,17 @@ export class ChatComponent {
   }
 
   async ngOnInit() {
+    this.getMyEmail();
 
-    this.connection.on('ReceiveMessage', (emailTo, message) => {
+    console.log('Connecting...');
+    this.connection.on('ReceiveMessage', (emailFrom, message) => {
       this.messages.push(`${message}`);
     });
 
     try {
-      await this.connection.start();
       console.log('Connection started');
+      await this.connection.start();
+      console.log("Connected");
 
     } catch (err) {
       console.error('Erro ao iniciar conexão:', err);
@@ -47,5 +52,16 @@ export class ChatComponent {
 
   async sendMessage(emailTo: string, message: string) {
     await this.connection.invoke('SendMessage', emailTo, message);
+  }
+
+  getMyEmail() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decode: any = jwtDecode(token);
+      return this.emailFrom = decode.email;
+    } 
+    
+    return window.location.href = '/auth';
+
   }
 }

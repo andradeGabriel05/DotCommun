@@ -1,4 +1,5 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using Microsoft.AspNetCore.SignalR;
 
 namespace Infra.Hubs;
@@ -7,24 +8,11 @@ public class ChatHub : Hub
 {
     public Task SendMessage(string emailTo, string message)
     {
-        return Clients.User(emailTo).SendAsync("ReceiveMessage", emailTo, message);
+        var emailFrom = Context.User?.FindFirst(ClaimTypes.Email)?.Value;
+        
+        Console.WriteLine($"📩 {emailFrom} enviou uma mensagem para {emailTo}: {message}");
+        
+        return Clients.Users(emailFrom, emailTo).SendAsync("ReceiveMessage", emailFrom, message);
     }
     
-    public override async Task OnConnectedAsync()
-    {
-        var user = Context.User;
-        if (user == null)
-        {
-            Console.WriteLine("❌ Usuário não autenticado.");
-        }
-        else
-        {
-            foreach (var claim in user.Claims)
-            {
-                Console.WriteLine($"🔹 Claim: {claim.Type} = {claim.Value}");
-            }
-        }
-
-        await base.OnConnectedAsync();
-    }
 }

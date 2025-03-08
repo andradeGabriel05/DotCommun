@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../services/auth/auth.service';
 import { provideHttpClient } from '@angular/common/http';
 import { ignoreElements } from 'rxjs';
 
@@ -28,7 +28,7 @@ export class AuthComponent implements OnInit {
       next: (response: any) => {
         console.log(response);
         localStorage.setItem('token', response.token);
-
+        window.location.href = '';
       },
       error: (error) => {
         console.log(error);

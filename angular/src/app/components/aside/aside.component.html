@@ -1,0 +1,14 @@
+<div class="" *ngFor="let user of users">
+  <div>
+    <button (click)="setSelectUser(user.username, user.email)">{{ user.username }}</button>
+  </div>
+</div>
+
+<div *ngIf="selectedUser">
+  <p>Selected user: {{ selectedUser }}</p>
+  <button (click)="clearSelection()">Close</button>
+</div>
+
+<div *ngIf="!selectedUser">
+  <p>Choose a user</p>
+</div>
