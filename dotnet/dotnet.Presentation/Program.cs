@@ -1,3 +1,4 @@
+using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using Application.Services;
 using Domain.Interfaces.Repositories;
@@ -17,6 +18,9 @@ builder.Services.AddDbContext<UserDbContext>(options =>
                          throw new InvalidOperationException("Connection string is missing")));
 
 //jwt
+JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

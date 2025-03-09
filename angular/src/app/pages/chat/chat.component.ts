@@ -14,6 +14,7 @@ import { AsideComponent } from '../../components/aside/aside.component';
   styleUrl: './chat.component.scss'
 })
 export class ChatComponent {
+  public idEmailTo: string = localStorage.getItem('idEmailTo') ?? '';
   public emailTo: string = localStorage.getItem('emailTo') ?? '';
   public emailFrom: string = '';
 
@@ -50,8 +51,10 @@ export class ChatComponent {
     
   }
 
-  async sendMessage(emailTo: string, message: string) {
-    await this.connection.invoke('SendMessage', emailTo, message);
+  async sendMessage(message: string) {
+    console.log(localStorage.getItem('emailTo'))
+    console.log(localStorage.getItem('idEmailTo'))
+    await this.connection.invoke('SendMessage', localStorage.getItem('idEmailTo'), localStorage.getItem('emailTo'), message);
   }
 
   getMyEmail() {
@@ -62,6 +65,5 @@ export class ChatComponent {
     } 
     
     return window.location.href = '/auth';
-
   }
 }

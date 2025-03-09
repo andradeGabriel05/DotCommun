@@ -25,9 +25,10 @@ export class AsideComponent implements OnInit {
     });
   }
 
-  public setSelectUser(user: any, email: any): void {
+  public setSelectUser(user: any, email: any, idEmailTo: any): void {
     this.selectedUser = user;
     localStorage.setItem('emailTo', email);
+    localStorage.setItem('idEmailTo', idEmailTo);
   }
 
   public clearSelection(): void {

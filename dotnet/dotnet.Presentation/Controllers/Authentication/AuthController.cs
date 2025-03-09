@@ -30,18 +30,20 @@ public class AuthController : ControllerBase
 
         if (user == null) return Unauthorized();
         
-        var token = GenerateJWTToken(model.Username, model.Email);
+        var token = GenerateJWTToken(user.Id, model.Username, model.Email);
+        Console.WriteLine(user.Id);
         return Ok(new {token});
     }
 
 
     
-    private string GenerateJWTToken(string username, string email)
+    private string GenerateJWTToken(Guid id, string username, string email)
     {
         var claims = new[]
         {
-            new Claim(JwtRegisteredClaimNames.Sub, username),
-            new Claim(JwtRegisteredClaimNames.Email, email),
+            new Claim(JwtRegisteredClaimNames.Sub, id.ToString()),
+            new Claim(ClaimTypes.Email, email),
+            new Claim(ClaimTypes.NameIdentifier, id.ToString()),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 

@@ -21,6 +21,7 @@ namespace Infra.Data
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -30,15 +31,33 @@ namespace Infra.Data
             {
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
-                
+
                 entity.Property(e => e.Username)
                     .IsRequired()
                     .HasMaxLength(100);
-                
+        
                 entity.Property(e => e.Email)
                     .IsRequired()
                     .HasMaxLength(100);
             });
+
+            modelBuilder.Entity<Message>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                // Configura a relação para Sender com DeleteBehavior.Restrict
+                entity.HasOne(m => m.Sender)
+                    .WithMany() 
+                    .HasForeignKey(m => m.SenderId)
+                    .OnDelete(DeleteBehavior.Restrict);
+    
+                // Configura a relação para Receiver com DeleteBehavior.Restrict
+                entity.HasOne(m => m.Receiver)
+                    .WithMany()
+                    .HasForeignKey(m => m.ReceiverId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
         }
     }
 }

@@ -4,7 +4,7 @@
     <div>{{message}}</div>
 </div>
 
-<form (ngSubmit)="sendMessage(emailTo, message)" #chatForm="ngForm">
+<form (ngSubmit)="sendMessage(message)" #chatForm="ngForm">
     <input type="text" [(ngModel)]="message" name="message" placeholder="Message">
     <button type="submit">--></button>
 </form>
