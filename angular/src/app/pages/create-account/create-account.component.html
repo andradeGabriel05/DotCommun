@@ -1,0 +1,5 @@
+<form (ngSubmit)="createAccount()" #createAccountForm="ngForm">
+    <input type="text" [(ngModel)]="username" name="username" placeholder="username">
+    <input type="text" [(ngModel)]="email" name="email" placeholder="Email">
+    <button type="submit">Create account</button>
+</form>

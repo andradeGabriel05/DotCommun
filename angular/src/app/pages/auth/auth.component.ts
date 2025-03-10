@@ -13,15 +13,11 @@ import { ignoreElements } from 'rxjs';
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.scss',
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent {
   username!: string;
   email!: string;
 
   constructor(private authService: AuthService) {}
-
-  ngOnInit(): void {
-    console.log('AuthComponent initialized');
-  }
 
   login(): void {
     this.authService.login(this.username, this.email).subscribe({
