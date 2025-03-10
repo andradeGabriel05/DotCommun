@@ -1,10 +1,17 @@
 <app-aside></app-aside>
 
 <div class="" *ngFor="let message of messages">
-    <div>{{message}}</div>
+  <span *ngIf="message.user === getMyEmail()">eu: </span>
+  <span *ngIf="message.user !== getMyEmail()">ele:</span> 
+  <span>{{ message.text }}</span>
 </div>
 
 <form (ngSubmit)="sendMessage(message)" #chatForm="ngForm">
-    <input type="text" [(ngModel)]="message" name="message" placeholder="Message">
-    <button type="submit">--></button>
+  <input
+    type="text"
+    [(ngModel)]="message"
+    name="message"
+    placeholder="Message"
+  />
+  <button type="submit">--></button>
 </form>
