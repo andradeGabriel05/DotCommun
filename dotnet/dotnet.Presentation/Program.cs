@@ -1,5 +1,6 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
+using Application.Interface;
 using Application.Services;
 using Domain.Interfaces.Repositories;
 using Infra.Data;
@@ -69,7 +70,11 @@ builder.Services.AddCors(options =>
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IUserService, UserService>();
 
+builder.Services.AddTransient<IMessageRepository, MessageRepository>();
+builder.Services.AddTransient<IMessageService, MessageService>();
+
 builder.Services.AddSingleton<IUserIdProvider, UsernameUserIdProvider>();
+
 builder.Services.AddSignalR();
 
 

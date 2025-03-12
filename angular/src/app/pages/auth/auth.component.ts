@@ -5,6 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AuthService } from '../../services/auth/auth.service';
 import { provideHttpClient } from '@angular/common/http';
 import { ignoreElements } from 'rxjs';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   standalone: true,
@@ -16,7 +17,7 @@ import { ignoreElements } from 'rxjs';
 export class AuthComponent {
   username!: string;
   email!: string;
-
+  userid!: any;
   constructor(private authService: AuthService) {}
 
   login(): void {
@@ -24,11 +25,22 @@ export class AuthComponent {
       next: (response: any) => {
         console.log(response);
         localStorage.setItem('token', response.token);
+        localStorage.setItem('userid', this.getMyId());
+        
         window.location.href = '';
       },
       error: (error) => {
         console.log(error);
       },
     });
+  }
+
+  getMyId() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decode: any = jwtDecode(token);
+      return (this.userid = decode.sub);
+    }
+
   }
 }

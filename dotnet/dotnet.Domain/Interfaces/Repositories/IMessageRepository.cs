@@ -4,8 +4,7 @@ namespace Domain.Interfaces.Repositories;
 
 public interface IMessageRepository
 {
-    Task<Message> PostMessage(Message message);
-    Task<List<Message>> GetMessage(Guid idSender, Guid idReceiver);
+    Task<List<Message>> GetMessagesByUsers(Guid idSender, Guid idReceiver, int pageNumber, int pageSize);
     
     
 }

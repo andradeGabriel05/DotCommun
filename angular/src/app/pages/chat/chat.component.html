@@ -1,8 +1,8 @@
 <app-aside></app-aside>
 
 <div class="" *ngFor="let message of messages">
-  <span *ngIf="message.user === getMyEmail()">eu: </span>
-  <span *ngIf="message.user !== getMyEmail()">ele:</span> 
+  <span *ngIf="message.user === userid">eu: </span>
+  <span *ngIf="message.user !== userid">ele:</span> 
   <span>{{ message.text }}</span>
 </div>
 

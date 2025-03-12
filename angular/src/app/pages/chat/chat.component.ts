@@ -6,6 +6,7 @@ import { baseUrl } from '../../../global';
 import { jwtDecode } from 'jwt-decode';
 import { AsideComponent } from '../../components/aside/aside.component';
 import { IChat } from '../../interfaces/chat';
+import { ChatService } from '../../services/chat/chat.service';
 
 @Component({
   standalone: true,
@@ -23,10 +24,11 @@ export class ChatComponent {
   public messages: IChat[] = [];
 
   public users: any[] = [];
+  public userid: string = localStorage.getItem('userid') ?? '';
 
   private connection: HubConnection;
 
-  constructor() {
+  constructor(private chatService: ChatService) {
     this.connection = new HubConnectionBuilder()
       .withUrl(baseUrl + 'chatHub', {
         accessTokenFactory: () => localStorage.getItem('token') ?? '',
@@ -37,16 +39,19 @@ export class ChatComponent {
 
   async ngOnInit() {
     this.getMyEmail();
-
+    this.test();
+    
     console.log('Connecting...');
     this.connection.on('ReceiveMessage', (emailFrom, message) => {
-      this.messages.push({ text: message, user: emailFrom });
-      console.log(this.messages);
+      const currentEmail = this.getMyEmail();
 
-      // const lenghtUser = this.users.length;
-      // console.log(`Message from ${emailFrom}`);
-      // console.log(`emaail ${this.getMyEmail()}`);
-      // console.log(this.users[lenghtUser - 1]);
+      let senderId: string;
+
+      emailFrom === currentEmail
+        ? (senderId = this.userid)
+        : (senderId = localStorage.getItem('idEmailFrom') ?? '');
+
+      this.messages.push({ text: message, user: senderId });
     });
 
     try {
@@ -56,6 +61,17 @@ export class ChatComponent {
     } catch (err) {
       console.error('Erro ao iniciar conexão:', err);
     }
+  }
+  public test(): void {
+    this.chatService
+      .getMessages(this.userid, this.idEmailTo)
+      .subscribe((res) => {
+        res.forEach((item: { content: string; idSender: string }) => {
+          this.messages.push({ text: item.content, user: item.idSender });
+        });
+        console.log(res);
+        console.log(this.messages);
+      });
   }
 
   async sendMessage(message: string) {

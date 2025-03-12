@@ -1,17 +1,22 @@
-﻿using Domain.Entities;
+﻿using Azure;
+using Domain.Entities;
+using Infra.Data;
+using Microsoft.AspNetCore.Http.Headers;
+using Microsoft.EntityFrameworkCore;
 
 namespace Domain.Interfaces.Repositories;
 
 public class MessageRepository : IMessageRepository
 {
-    public Task<Message> PostMessage(Message message)
+    private readonly UserDbContext _userDbContext;
+    
+    public MessageRepository(UserDbContext userDbContext)
     {
-        throw new NotImplementedException();
-
+        _userDbContext = userDbContext;
     }
-
-    public Task<List<Message>> GetMessage(Guid idSender, Guid idReceiver)
+    
+    public async Task<List<Message>> GetMessagesByUsers(Guid idSender, Guid idReceiver, int pageNumber, int pageSize)
     {
-        throw new NotImplementedException();
+        return await _userDbContext.Messages.Where(m => m.SenderId == idSender && m.ReceiverId == idReceiver).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
     }
 }
