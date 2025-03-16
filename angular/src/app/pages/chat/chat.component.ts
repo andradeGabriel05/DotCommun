@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { baseUrl } from '../../../global';
@@ -7,16 +7,17 @@ import { jwtDecode } from 'jwt-decode';
 import { AsideComponent } from '../../components/aside/aside.component';
 import { IChat } from '../../interfaces/chat';
 import { ChatService } from '../../services/chat/chat.service';
+import { SimpleChanges } from '@angular/core';
 
 @Component({
-  standalone: true,
   selector: 'app-chat',
   imports: [FormsModule, CommonModule, AsideComponent],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
 })
-export class ChatComponent {
-  public idEmailTo: string = localStorage.getItem('idEmailTo') ?? '';
+export class ChatComponent implements OnInit, OnChanges{
+  @Input() public idEmailTo: string = '';
+  // public idEmailTo: string = localStorage.getItem('idEmailTo') ?? '';
   public emailTo: string = localStorage.getItem('emailTo') ?? '';
   public emailFrom: string = '';
 
@@ -39,8 +40,9 @@ export class ChatComponent {
 
   async ngOnInit() {
     this.getMyEmail();
-    this.test();
-    
+    if (!this.idEmailTo) {
+      this.idEmailTo = localStorage.getItem('idEmailTo') ?? '';
+    }
     console.log('Connecting...');
     this.connection.on('ReceiveMessage', (emailFrom, message) => {
       const currentEmail = this.getMyEmail();
@@ -62,7 +64,18 @@ export class ChatComponent {
       console.error('Erro ao iniciar conexão:', err);
     }
   }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log("mudou");
+    if (changes['idEmailTo'] && changes['idEmailTo'].currentValue) {
+      this.test();
+    }
+  }
+
   public test(): void {
+    console.log("oi dnv");
+    this.messages = [];
+    console.log(this.messages);
     this.chatService
       .getMessages(this.userid, this.idEmailTo)
       .subscribe((res) => {

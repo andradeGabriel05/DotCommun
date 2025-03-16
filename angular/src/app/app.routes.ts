@@ -7,7 +7,7 @@ const mainPath: string = localStorage.getItem('token')?.length  ? 'chat' : 'auth
 
 export const routes: Routes = [
     {path: '', redirectTo: mainPath, pathMatch: 'full'},
-    {path: 'chat', component: ChatComponent},
+    {path: 'chat'},
     {path: 'auth', component: AuthComponent},
     {path: 'create-account', component: CreateAccountComponent}
 ];
